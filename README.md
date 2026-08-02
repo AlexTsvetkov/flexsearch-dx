@@ -2,6 +2,8 @@
 
 **A type-safe FlexibleSearch DSL and performance analyzer for SAP Commerce — queries that fail at compile time, not in production.**
 
+**🌐 Live site: https://alextsvetkov.github.io/flexsearch-dx/**
+
 > ⚠️ **Status:** early scaffold. The core abstraction, a starter implementation and tests are real; this is a foundation to build on, not a finished product. See [Roadmap](#roadmap).
 
 **Stack:** Java 21 + Gradle.
