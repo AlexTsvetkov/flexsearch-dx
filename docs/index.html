@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>flexsearch-dx · SAP Commerce backend tooling</title>
+<meta name="description" content="A type-safe FlexibleSearch DSL and performance analyzer for SAP Commerce — queries that fail at compile time, not in production." />
+<style>
+  :root{--bg:#0b1020;--panel:#141b34;--ink:#e8ecf8;--muted:#9aa6c7;--accent:#5b8cff;--accent2:#31d0aa;--line:#26304f;--maxw:960px}
+  *{box-sizing:border-box}
+  body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;background:linear-gradient(180deg,#0b1020,#0d1428 60%,#0b1020);color:var(--ink);line-height:1.6}
+  a{color:var(--accent);text-decoration:none} a:hover{text-decoration:underline}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 20px}
+  header.hero{padding:72px 0 48px;text-align:center;border-bottom:1px solid var(--line)}
+  .badge{display:inline-block;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--accent2);border:1px solid var(--line);border-radius:999px;padding:5px 14px;margin-bottom:20px}
+  h1{font-size:clamp(34px,6vw,56px);margin:.1em 0;background:linear-gradient(90deg,#8fb0ff,#31d0aa);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .tag{font-size:clamp(17px,2.4vw,21px);color:var(--muted);max-width:660px;margin:16px auto 0}
+  .cta{margin-top:32px;display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+  .btn{background:var(--accent);color:#fff;padding:12px 22px;border-radius:10px;font-weight:600;border:0}
+  .btn.ghost{background:transparent;border:1px solid var(--line);color:var(--ink)}
+  section{padding:52px 0;border-bottom:1px solid var(--line)}
+  h2{font-size:28px;margin:0 0 8px} .lead{color:var(--muted);margin:0 0 28px}
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:18px}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:22px}
+  .card h3{margin:0 0 8px;font-size:18px} .card p{margin:0;color:var(--muted);font-size:15px}
+  .k{color:var(--accent2);font-weight:600}
+  pre{background:#0a0f22;border:1px solid var(--line);border-radius:12px;padding:18px;overflow:auto;font-size:13.5px;color:#cdd7f5}
+  table{width:100%;border-collapse:collapse;margin-top:8px}
+  th,td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--line);font-size:15px}
+  th{color:var(--muted);font-weight:600}
+  footer{padding:40px 0;text-align:center;color:var(--muted);font-size:14px}
+  .note{background:rgba(91,140,255,.08);border:1px solid var(--line);border-radius:12px;padding:16px;color:var(--muted);font-size:14px}
+</style>
+</head>
+<body>
+<header class="hero">
+  <div class="wrap">
+    <span class="badge">SAP Commerce · Java 21 · Gradle</span>
+    <h1>flexsearch-dx</h1>
+    <p class="tag">A type-safe FlexibleSearch DSL and performance analyzer for SAP Commerce — queries that fail at compile time, not in production.</p>
+    <div class="cta">
+      <a class="btn" href="https://github.com/AlexTsvetkov/flexsearch-dx">View on GitHub</a>
+      <a class="btn ghost" href="#why">Why it's useful</a>
+    </div>
+  </div>
+</header>
+
+<section>
+  <div class="wrap">
+    <h2>The problem</h2>
+    <p class="lead">FlexibleSearch is stringly-typed: queries break silently when the model changes, and hide N+1 and missing-index performance cliffs. Generic SQL tools don&#x27;t understand the type-system→table mapping or the region cache.</p>
+    <div class="grid"><div class="card"><h3>Expertise-gated</h3><p>FlexibleSearch is stringly-typed: queries break silently when the model changes, and hide N+1 and missing-index performance cliffs. Generic …</p></div><div class="card"><h3>Costly &amp; slow</h3><p>Manual, error-prone work that scales badly across a large estate.</p></div><div class="card"><h3>Under-tooled</h3><p>The ecosystem lacks modern, opinionated backend tooling for this.</p></div></div>
+  </div>
+</section>
+
+<section id="why">
+  <div class="wrap">
+    <h2>The solution &amp; why it's useful</h2>
+    <p class="lead">(a) A **type-safe query builder** generated from the type model so queries fail at compile time; (b) a **query analyzer** that explains plans, flags N+1 and cache-hostile patterns, and suggests indexes — SAP-Commerce-aware.</p>
+    <div class="grid"><div class="card"><h3>Compile-time safety</h3><p>Queries are built from generated, type-checked metamodel classes — a renamed attribute is a build error, not a 2am incident.</p></div><div class="card"><h3>Fluent &amp; readable</h3><p>A jOOQ-style builder that reads like the query it produces.</p></div><div class="card"><h3>Performance-aware</h3><p>The analyzer knows the type→table mapping and flags N+1, full scans and cache-hostile access.</p></div><div class="card"><h3>Zero runtime surprises</h3><p>What compiles is what runs.</p></div></div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h2>Capabilities</h2>
+    <table><tr><th>Capability</th><th>Description</th></tr><tr><td><span class="k">`QueryBuilder`</span></td><td>Fluent, type-safe construction of FlexibleSearch statements.</td></tr><tr><td><span class="k">`select().from().where()`</span></td><td>Metamodel-driven column and type references.</td></tr><tr><td><span class="k">`QueryAnalyzer`</span></td><td>Static + plan-based detection of N+1 and missing indexes.</td></tr><tr><td><span class="k">Index advisor</span></td><td>Suggests indexes for hot query shapes.</td></tr></table>
+    <p class="note">Early scaffold: the core abstraction, a starter implementation and tests are real. This is a foundation to build on.</p>
+  </div>
+</section>
+
+<footer><div class="wrap"><p>flexsearch-dx · MIT License · © 2026 Aliaksandr Tsviatkou<br/>Part of a backend tooling suite for SAP Commerce Cloud.</p></div></footer>
+</body>
+</html>
