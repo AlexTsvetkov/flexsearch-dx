@@ -61,6 +61,19 @@ See [CONTRIBUTING.md](./CONTRIBUTING.md). Conventional commits; generated code s
 
 [MIT](./LICENSE) © 2026 Aliaksandr Tsviatkou
 
+## Honest assessment
+
+> From the v2 self-critical analysis. Scores use **Gap · Value · Moat · Time-to-revenue · Risk** (for Risk, **higher = safer**). Prior art is named deliberately — "no competitor" is almost never true.
+
+**Scores:** Gap 3 · Value 3 · Moat 2 · TTR 3 · Risk 4
+
+- **Prior art / competition.** jOOQ / QueryDSL patterns are well known; nothing SAP-Commerce-aware. Real but small gap.
+- **True differentiator.** Codegen from the type model + a region-cache-aware analyzer.
+- **Kill criterion.** If teams keep hand-writing query strings because the codegen step annoys them, adoption stalls.
+- **Verdict.** **OSS module**, not a standalone company.
+
+See the full landscape, go-to-market and the **IP / conflict-of-interest** discussion in [sap-commerce-general-ideas-for-startup.md](https://github.com/AlexTsvetkov/sap-commerce-ideas-for-projects/blob/main/ideas-for-startup/sap-commerce-general-ideas-for-startup.md).
+
 ---
 
 *Part of a backend tooling suite for SAP Commerce Cloud. See [`commerce-mcp`](https://github.com/AlexTsvetkov/commerce-mcp) for the AI-native flagship.*
