@@ -69,6 +69,39 @@
   </div>
 </section>
 
+<section>
+  <div class="wrap">
+    <h2>Usage example</h2>
+    <p class="lead">Distilled from the runnable tutorial <span class="k">examples/Example.java</span>. The <span class="k">Output</span> block is real captured stdout.</p>
+    <p>Build a type-checked FlexibleSearch string, then lint it for performance foot-guns:</p>
+    <pre><code>TypeModel model = TypeModel.builder()
+        .type("Product", "code", "name", "catalogVersion", "creationtime")
+        .type("Currency", "isocode", "name", "active", "conversion")
+        .build();
+
+String q = QueryBuilder.from(model, "Product", "p")
+        .select("code", "name", "creationtime")
+        .where("catalogVersion", "=", "cv")
+        .where("name", "LIKE", "namePattern")
+        .orderBy("creationtime", false) // DESC
+        .orderBy("code", true)          // ASC
+        .build();
+
+// A typo fails fast, at build time:
+QueryBuilder.from(model, "Product", "p").select("code", "nam").build();
+
+// Lint an unbounded query:
+QueryAnalyzer.analyze("SELECT {p:code} FROM {Product AS p}");</code></pre>
+    <pre>Output:
+SELECT {p:code}, {p:name}, {p:creationtime} FROM {Product AS p} WHERE {p:catalogVersion} = ?cv AND {p:name} LIKE ?namePattern ORDER BY {p:creationtime} DESC, {p:code} ASC
+
+Rejected as expected: unknown attribute 'nam' on Product
+
+WARN: No WHERE clause; this query performs a full table scan.</pre>
+    <p class="note">Run it yourself (JDK 21, no Gradle): <span class="k">find src/main/java -name '*.java' | xargs javac -d /tmp/ex-flex &amp;&amp; java -cp /tmp/ex-flex com.sapcommercetools.flexsearch.examples.Example</span></p>
+  </div>
+</section>
+
 <footer><div class="wrap"><p>flexsearch-dx · MIT License · © 2026 Aliaksandr Tsviatkou<br/>Part of a backend tooling suite for SAP Commerce Cloud.</p></div></footer>
 </body>
 </html>
